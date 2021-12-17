@@ -25,7 +25,26 @@ void StreamParser::test(uint16_t waittime) {
 }
 
 void StreamParser::readshiz() {
+  if (_Serialx.available()>=6)
+  {
+    for (byte i = 0; i < 6/2; i++)
+    {
+      for (byte i = 0; i < 2; i++)
+      {
 
+      }
+      for (byte i = 0; i < 2; i++)
+      {
+
+      }
+      for (byte i = 0; i < 2; i++)
+      {
+        /* code */
+      }
+
+
+    }
+  }
 }
 
 StreamParser::StreamParser(Stream &Serialx, const uint16_t timeout): _Serialx(Serialx) {

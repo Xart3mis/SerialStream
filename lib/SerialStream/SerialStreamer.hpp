@@ -37,13 +37,17 @@ class StreamParser
 {
 private:
   Stream &_Serialx;
+  MessageHeader header;
 
+  void readshiz();
   void clearInputBuffer();
   void readMessageHeader();
 
  public:
   void test(uint16_t waittime);
-  void readshiz();
+
+  MessagePayload getPayload();
+  MessageHeader getHeader();
 
   StreamParser(Stream &Serialx, const uint16_t timeout);
   ~StreamParser();
