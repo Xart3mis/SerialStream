@@ -7,9 +7,12 @@ class SerialComm:
     class SerialException(Exception):
         pass
 
-    __serial_con__ = serial.Serial
+    __serial_con__: serial.Serial
+    __timeout__: int
 
-    def __init__(self, serial_port: str = "", baud_rate: int = 9600):
+    def __init__(self, serial_port: str = "", baud_rate: int = 9600, timeout: int = 15):
+        self.__timeout__ = timeout
+
         ports = [
             i.device for i in serial.tools.list_ports.comports() if "SER" in i.hwid
         ]
@@ -22,7 +25,7 @@ class SerialComm:
         self.__serial_con__ = serial.Serial(
             ports[0] if len(serial_port) < 3 else serial_port,
             baudrate=baud_rate,
-            timeout=1,
+            timeout=timeout,
         )
 
         if not self.__serial_con__.isOpen():
@@ -30,15 +33,12 @@ class SerialComm:
 
         time.sleep(1.25)
 
-    def sendBlock(self):
-        header = 0
-        header += 0x1F * 10000
-        header += 0x1C * 100
-        header += 15
+    def sendBlock(self, start_marker: int = 0x1F, end_marker: int = 0x1E):
+        header: str = f"{start_marker:02}{end_marker:02}{self.__timeout__:02}"
+        self.__serial_con__.write(header.encode())
         print(header)
-        # self.__serial_con__.write(header)
 
 
 if __name__ == "__main__":
-    device = SerialComm()
+    device = SerialComm(baud_rate=115200, timeout=15)
     device.sendBlock()
