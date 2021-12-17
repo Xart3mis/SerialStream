@@ -15,12 +15,12 @@ void StreamParser::test(uint16_t waittime)
 
   for (int i = 8; i >= 1; --i)
   {
-    for (int space = 0; space < 8 - i; ++space)
+    for (byte space = 0; space < 8 - i; ++space)
       _Serialx.print("  ");
 
-    for (int j = i; j <= 2 * i - 1; ++j)
+    for (byte j = i; j <= 2 * i - 1; ++j)
       star();
-    for (int j = 0; j < i - 1; ++j)
+    for (byte j = 0; j < i - 1; ++j)
       star();
 
     _Serialx.println();
@@ -55,6 +55,13 @@ void StreamParser::readHeader()
   }
 }
 
-StreamParser::StreamParser(Stream &Serialx) : _Serialx(Serialx), header(){};
+MessageHeader StreamParser::getHeader()
+{
+  MessageHeader temphead;
+  temphead = header;
+  memset(&header, 0, sizeof(MessageHeader));
+  return temphead;
+}
 
+StreamParser::StreamParser(Stream &Serialx) : _Serialx(Serialx), header(), payload(){};
 StreamParser::~StreamParser(){};
