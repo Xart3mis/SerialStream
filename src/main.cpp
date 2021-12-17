@@ -3,19 +3,25 @@
 
 void setup()
 {
-  Serial.begin(9600);
-  pinMode(PC13, OUTPUT);
+  Serial.begin(115200);
+  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 StreamParser Parser(Serial);
+MessageHeader header;
 
 void loop()
 {
-  // delay(800);
-  // Serial.println(0x1F);
-  // delay(800);
-  // Serial.println(0x1C);
   Parser.readHeader();
-  digitalWrite(PC13, digitalRead(PC13) ^ 1);
-  delay(200);
+  header = Parser.getHeader();
+
+  if (header.start_marker == 0x1F && header.end_marker == 0x1E && header.timeout == 15)
+  {
+    for (byte i = 0; i < 20; i++)
+    {
+      digitalWrite(LED_BUILTIN, digitalRead(LED_BUILTIN) ^ 1);
+      delay(50);
+    }
+  }
+  digitalWrite(LED_BUILTIN, 0);
 }
