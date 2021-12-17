@@ -8,7 +8,7 @@
 #endif // !PAYLOAD_SIZE
 
 struct MessageHeader {
-  static uint16_t timeout;
+  uint16_t timeout;
 
   char start_marker;
   char end_marker;
@@ -39,17 +39,17 @@ private:
   Stream &_Serialx;
   MessageHeader header;
 
-  void readshiz();
   void clearInputBuffer();
   void readMessageHeader();
 
  public:
+  void readHeader();
   void test(uint16_t waittime);
 
   MessagePayload getPayload();
   MessageHeader getHeader();
 
-  StreamParser(Stream &Serialx, const uint16_t timeout);
+  StreamParser(Stream &Serialx);
   ~StreamParser();
 };
 #endif // !StreamParser_H

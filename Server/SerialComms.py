@@ -36,7 +36,7 @@ class SerialComm:
         header += 0x1C * 100
         header += 15
         print(header)
-        self.__serial_con__.write(header)
+        # self.__serial_con__.write(header)
 
 
 if __name__ == "__main__":

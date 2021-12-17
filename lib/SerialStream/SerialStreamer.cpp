@@ -24,31 +24,31 @@ void StreamParser::test(uint16_t waittime) {
   delay(waittime);
 }
 
-void StreamParser::readshiz() {
+void StreamParser::readHeader() {
+  char temp[2] = {0};
+
+  /*312815*/
+
   if (_Serialx.available()>=6)
   {
-    for (byte i = 0; i < 6/2; i++)
-    {
-      for (byte i = 0; i < 2; i++)
-      {
+    temp[0] = Serial.read();
+    temp[1] = Serial.read();
+    header.start_marker = atoi(temp);
 
-      }
-      for (byte i = 0; i < 2; i++)
-      {
+    temp[0] = 0;
+    temp[1] = 0;
+    temp[0] = Serial.read();
+    temp[1] = Serial.read();
+    header.end_marker = atoi(temp);
 
-      }
-      for (byte i = 0; i < 2; i++)
-      {
-        /* code */
-      }
-
-
-    }
+    temp[0] = 0;
+    temp[1] = 0;
+    temp[0] = Serial.read();
+    temp[1] = Serial.read();
+    header.timeout = atoi(temp);
   }
 }
 
-StreamParser::StreamParser(Stream &Serialx, const uint16_t timeout): _Serialx(Serialx) {
-    _Serialx.setTimeout(timeout);
-};
+StreamParser::StreamParser(Stream &Serialx): _Serialx(Serialx), header(){};
 
 StreamParser::~StreamParser(){};
