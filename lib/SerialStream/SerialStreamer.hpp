@@ -40,6 +40,7 @@ class StreamParser
 private:
   Stream &_Serialx;
   MessageHeader header;
+  MessagePayload payload;
 
   void clearInputBuffer();
   void readMessageHeader();
