@@ -4,10 +4,11 @@
 #include "Arduino.h"
 
 #ifndef PAYLOAD_SIZE
-  #define PAYLOAD_SIZE 1000
+#define PAYLOAD_SIZE 1000
 #endif // !PAYLOAD_SIZE
 
-struct MessageHeader {
+struct MessageHeader
+{
   uint16_t timeout;
 
   char start_marker;
@@ -16,15 +17,16 @@ struct MessageHeader {
 
 enum RXStatus
 {
-  RX_COMPLETE,     // message complete
-  RX_INCOMPLETE,   // message not complete yet
-  RX_ERR_START,    // startbytes mismatch
-  RX_ERR_TIMEOUT,  // timeout error
-  RX_ERR_SIZE,     // payload bytes will not fit
-  RX_ERR_CS        // checksum error
+  RX_COMPLETE,    // message complete
+  RX_INCOMPLETE,  // message not complete yet
+  RX_ERR_START,   // startbytes mismatch
+  RX_ERR_TIMEOUT, // timeout error
+  RX_ERR_SIZE,    // payload bytes will not fit
+  RX_ERR_CS       // checksum error
 };
 
-struct MessagePayload {
+struct MessagePayload
+{
   static uint32_t payload[PAYLOAD_SIZE];
 
   static uint16_t header_size;
@@ -42,7 +44,7 @@ private:
   void clearInputBuffer();
   void readMessageHeader();
 
- public:
+public:
   void readHeader();
   void test(uint16_t waittime);
 

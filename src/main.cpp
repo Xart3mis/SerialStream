@@ -1,14 +1,16 @@
 #include "Arduino.h"
 #include "SerialStreamer.hpp"
 
-void setup() {
-   Serial.begin(9600);
-   pinMode(PC13, OUTPUT);
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(PC13, OUTPUT);
 }
 
 StreamParser Parser(Serial);
 
-void loop() {
+void loop()
+{
   // delay(800);
   // Serial.println(0x1F);
   // delay(800);
